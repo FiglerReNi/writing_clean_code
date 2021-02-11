@@ -47,7 +47,8 @@ class DiskStorage
     public function insertFile(string $fileName, string $content)
     {
         $this->createDirectory();
-        $file = fopen($this->directoryName . $fileName, "w");
+        $filePath = $this->directoryName . $fileName;
+        $file = fopen($filePath, "w");
         fwrite($file, $content);
         fclose($file);
         # Todo: Add proper error handling
