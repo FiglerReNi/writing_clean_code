@@ -18,11 +18,22 @@
 //echo 'egyéb kódok';
 
 //C változat
+//$tomb = [1,2,3,4,5,6];
+//foreach ($tomb as $item){
+//    if($item === 3){
+//        continue;
+//    }
+//    echo $item . '</br>';
+//}
+
+//D változat
 $tomb = [1,2,3,4,5,6];
 foreach ($tomb as $item){
+    condition($item);
+}
+function condition($item){
     if($item === 3){
-        continue;
+        return;
     }
     echo $item . '</br>';
 }
-
