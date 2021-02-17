@@ -37,12 +37,12 @@ function pcard(){
     echo 'pcard';
 }
 function rcard(){
-    echo 'pcard';
+    echo 'rcard';
 }
 function ppaypal(){
-    echo 'pcard';
+    echo 'ppaypal';
 }
 function rpaypal(){
-    echo 'pcard';
+    echo 'rpaypal';
 }
 
