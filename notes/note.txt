@@ -1,0 +1,238 @@
+https://people.inf.elte.hu/mozsik/2019201/pt2/protected/software_technology_prac_6.pdf
+https://www.oodesign.com/
+https://okt.sed.hu/
+https://people.inf.elte.hu/mozsik/2019201/pt2/protected/software_technology_prac_6.pdf
+https://hu.wikipedia.org/wiki/Demeter_t%C3%B6rv%C3%A9nye
+
+Kulcs szavak:
+	Naming
+	Formatting
+	Do One Thing
+	Levels of Abstraction
+	Don't  Repeat Yorself – DRY
+	Pure Function
+	Side Effects
+	Guards
+	Fail Fast
+	Factory function
+	Polymorphism
+	Cohesion
+	Low Of Demeter
+	SOLID
+		○ SRP
+		○ OCP
+		○ LSP
+		○ ISP
+    ○ DIP
+
+Szabályok:
+  	1. Könnyen olvasható és érthető kell legyen a kód.
+  	2. A functionok és változók elnevezése "beszédes" legyen.
+  	3. Az összetett kódok helyett osztályokba, metódusokba, függvényekbe rendezzük a kódot.
+  	4. Megadjuk a visszatérési érték típusát, illetve a paraméterek típusát.
+  		○ A PHP 7.0-tól tudja ezt.
+  		○ Az erős típusossággal kivédhetők a hibák, pontosan tudjuk mivel kell visszatérni.
+  	5. Kerüljük az egymásba ágyazott if-eket.
+    6. Folyamatosan fejlesztjük, refactoráljuk a kódunk.
+
+Elnevezések:
+  Jelentéssel bíró neveket kell adnunk. Ami utal arra, hogy mit csinál az adott method, class. Vagy mit tárol az adott változó. A cél, hogy a kód nélkül, csak a nevekből is legyen valami képünk, hogy mit csinál a kód.
+  Csoportok:
+  	• Változók, konstansok - ami valamilyen adatot tárol
+  		○ elnevezés: főnevek vagy rövid kifejezések melléknévvel
+  		○ használhatunk két főnevet is, hogy részleteseb legyen a leírás pl.:firstName a name helyett
+  			§ Ha object, szám, string akkor próbáljuk meg leírni mit tárol és az legyen a neve. pl: adminUser
+  			§ Ha boolean akkor kérdésként érdemes tárolni a nevét, amire igen/nem a válasz pl: isActive
+  	• Function, methods - valamit csinálnak (kalkuláció, parancs futtatás stb)
+  		○ elnevezés: igék vagy rövid kifejezések melléknévval
+  		○ a név állhat több szótagból is, ha úgy egyértelműbb lesz az elnevezés, de ne legyen benne redundancia
+  			§ Ha valamit csinál a függvény vagy valamilyen értékkel visszatér akkor azt kell leírni a névben mit csinál
+  			§ Ha boolean akkor kérdésként érdemes tárolni hogy mit csinál, amire igen/nem a válasz pl: emailIsValid()
+  	• Class - létrehozunk vele valamit, usert stb.
+  		○ elnevezés: egy vagy több főnév azt kell leírnia, milyen fajta objectet hozun létre
+  		○ Ha egy osztályban static methodok vannak, használhatjuk a -util, -utility, -manager végződéseet, mert ezek függvények gyűjteménye, amiket példányosítás nélkül hívunk. Hagyományos osztályoknál kerülni kell ezeket, mert túl álatlános
+  		○ A getterek és settereknek saját elnevezési szabályuk van:
+  			§ get/set kezdet és a változó neve
+  Névírási formák:
+  	snake_case:
+  		Főleg Phyton nevezi így a változókat és function/method-okat
+  	camelCase
+  		Főleg Java, Javascript és sok más nevezi így a változókat és function/method-okat
+  	PascalCase
+  		A class-ok neveit így írjuk
+  	kebab-case
+  		Főleg html
+  Összefoglalás:
+  	- Ne adjunk meg redundáns/ nem fontos információkat a nevekben
+  	- Kerüljük a slanget, nem egyértelmű, félrevezető neveket
+  	- Ha hasonló függvényeket kell elnevezni, legyen egyértelmű a névből miben különböznek
+  	- Az egész kód során következetesen használjuk az elnevezéseket, ha pl fetch-el jelölünk egy helyen adat visszaadást, akkor a kövi helyen is így nevezzük és ne pl get-tel
+  	- Használjunk konstans értékeket.
+
+Formátum, Komment:
+  Kommentek:
+  	• kerülni kell a sok kommentet, redundanciát okozhat
+  	• ha jók az elnevezések, akkor sok kommentet kiválthatnak, hiszen egyértelmű, hogy mit csinálnak
+  	• a külön kód blokkokat külön fájlba érdemes szervezni kommentelés helyett
+  	• ne legyen félrevezető a komment
+  	• kódot nem kommentelünk ki, hanem töröljük, a verzió kezelők úgyis megőrzik
+  	• a fájlok tetején jelezni szoktuk kinek a kódja az adott kód
+  	• rövid magyarázatok jók lehetnek pl regular expression esetén, amik ránézésre bonyolultak lehetnek
+  	• figyelmeztetések, adott kód hol működik (pl. csak bizonyos környezetben)
+  	• todo -> jegyzetek amit később csinálunk meg
+  	• dokumentáció: speciális komment, programozási nyelvenként eltér, hogy milyen struktúrában kell megírni
+  Formázás:
+  	• Növeli a kód olvashatóságát, érthetőségét
+  	• Két fajtája:
+  		○ vertikális
+  			§ helyek a sorok között
+  			§ kód csoportosítása
+  		○ horizontális
+  			§ behúzás
+  			§ space-k egy soron belül
+  			§ kód sor szélessége
+  	• Az egész kódbázisban következetesen használjuk
+  	• Nyelv specifikus szabályok is vannak, ezeket az ún. style guide-k tartalmazzák
+  		○ https://www.php-fig.org/psr/psr-12/
+  	Vertical formatting:
+  		Ø Ha túl sok sorból áll egy fájl, érdemes szétszedni külön fájlokba, ne legyen egy fájlban több osztály, nagyon különböző ódok stb.
+  		Ø A kód blokkok között hagyjunk sor kihagyást, pl az egymás alatti functionok között, de a hasonló dolgok között nem kell. Példéul fájlbehúzások között nem kell stb.
+  		Ø Ha egy function használ egy másikat, minél közelebb kerüljenek egymáshoz, ha lehet egyből alatta írjuk meg.
+  		Ø Az iDE-k tudnak auto-formatted-ot és tagolják vertikálisan a kódot.
+  		Ø A public/private methodok/változók sorrendje nyelv specifikus
+  		Ø Vannak nylevek, amelyek engedik, hogy meghívjunk egy olyan function-t amit csak lejebb írunk meg (javascript), de vannak olyanok is amelyek nem (python)
+  	Horizontal formatting:
+  		Ø Kerülni kell a túl hosszú sorokat
+  		Ø method/function/if stb esetén sorokra törldelünk és behúzásokat használunk
+  		Ø használjunk külön változókat az egymásba ágyazott kódok helyett
+  		Ø kerüljük az extrém hosszú neveket
+
+Functions, Methods:
+  Általános:
+  	• A function mérete ne legyen túl nagy, inkább szedjük szét több function-ba
+  	• A paraméterek száma ne legyen túl sok
+  Hívás oldala:
+  	• Minél kevesebb a paraméter, annál egyszerübb és olvasható a kód
+  	• Ha sok a paraméter figyelni kell a sorrendre, ami zavaró lehet
+  	• Kettőnél többet kerülni kell
+  	• A cél, hogy csökkentsük a paraméterek számát, de nem kell mindenáron. Ha teljesen egyértelmű, hogy milyen paraméter kell és milyen sorrendben, akkor 1-2 db rendben van.
+  	• Ha túl sok paraméter lenne, érdemes szétszedni két külön functionra.
+  	• Ha egy osztály konstruktorában van sok paraméter, érdemes inkább objektumként bekérni az adatokat és a másik oldalon olvashatóbb lesz, ha asszociativ tömbben adjuk meg az értékeket.
+  Ilyenkor nem kell aggódnunk a sorrend miatt sem
+  	• Dinamikus számú paraméter esetén lehet több paramétert is használni (ha mindig más számú paramétert adunk át egy functionnak)
+  		○ Pl. ha egy összeadó functiont csinálunk
+  		○ func_get_args – Returns an array comprising a function's argument list
+  	• Kerüljük az output paraméter használatát:
+  		○ Amikor egy függvény módosítja a bemenő paramétert és azt használja tovább, de nem tér vissza az új értékkel.
+  		○ Osztályok használatával tudjuk helyettesíteni
+  Function oldal:
+  	• Több kisebb function egy nagy helyett, hogy ne legyen túl nagy eltérés a function neve és hogy mit csinál között, illetve hogy olvasható, könnyen érthető legyen
+  	• Egy function egy dolgot csináljon, az egy dolog az egy logikai egység
+  	• Levels of Abstraction: különböző kód szintek vannak, segít eldönteni, hogy mi számít egy logikai egységnek:
+  		○ Pl. Egy beépített function meghívása, operátorok, összefűzés, tömb definiálás, amit a programozási nyelv vagy framework ad: low-level (ezeknek adott a neve, nem mindig egyértelmű)
+  		○ Egy saját osztály pédányosítása: high-level (ezeknek mi adunk nevet)
+  		○ Egy funcion-ben ne keverjük a high és low-lewel kódokat
+  	Példák:
+  		1. Egy function-be beteszünk egy low-lewel kódsort
+  			-> érthető lesz, hiszen a functionunk neve (high-level) érthető lesz, még ha a beépített nem is annyira (low-level), ha csak ez van benne és ennek megfelelő nevet kap a function
+  			-> így tudjuk a low-level kódokat beilleszteni a clean kódba
+  		2. Egy function sok mindent csinál és low-level kód is van benne
+  			->ez hibás, mert így a low-level kód nehezebben lesz érthető, ilyenkor érdemes szétszedni
+  	• Ha több hasonló dolgot végző function van, meghívhatjuk őket egy gyűjtő functionon belül:
+  		○ Például ha van egy user.setname és egy user.setage
+  			----> user.uptadte(itt adjuk meg a nevet kort, és az updaten belül meghívjuk a két eredetit)
+  	• DRY – Don't repeat yourself – ne ismételjünk kódot
+  	• A többször újrahasználható dolgokat kiszervezzük külön functionba
+  	• Ne szedjünk szét egy funciont:
+  		○ Ha csak a nevén kellene változtatni az olvashatósághoz
+  		○ Ha csak a méret miatt szednénk szét, de nehéz lenne az új funkciót megtalálni és sokat kellene görgetni hozzá
+  	• Pure function írására kell törekedni, ha lehet:
+  		○ Azonos bemeneti paraméterre ugyanaz lesz a kimenő paraméter (ha pl egy random számot adunk hozzá az nem pure, mert a kimenő paraméter ugyanannál a bejövőnél is más és más lesz)
+  		○ Nincs side effect
+  	• Side effects (nagyon sok esetben kellenek):
+  		○ Olyan program részek, amelyek az egész program állapotán változtatnak, nem csak a bemenő paraméterre vannak hatással
+  			----> Pl.: session-ok, http request küldés, konzolra írás, üzenet kiírása a usernek, adatbázis insert
+  		○ Az ilyen functionok sosem pur functionok
+  		○ Ha a programnak egy functionon kívüli külső, globális változóját is módosítja a function az is side effects
+  		○ A function elnevezése utaljon rá hogy side effect is történik, vagy tegyük külön functionba
+  	• Unit Test segít:
+  		○ Ha könnyű tesztet írni a kódunkhoz, akkor tiszta kód
+
+Feltétel kezelés, Error Handling:
+  Szabályok:
+  	• Kerüljük az egymásba ágyazást loopok és ifek esetén
+  	• Pozitív feltétel vizsgálat a negatív helyett olvashatóbb
+  	• Ha jó a hibakezelés csökkenthetjük az egymásba ágyazott ifeket
+  	• Beépített funkciók használata, if, for helyett ha van
+  Technikák:
+  	• Guards használata: egymásba ágyazott if esetén fordított feltételt vizsgálunk és return-el kilépünk (ún "fail fast"), így a kódblokk nem az ifen belül van és le sem fut ha return-el kilépünk az if-ből.  A teljes functionból kilép. A külső if lesz az ún. "guard".
+  	• Ha loop-on belül vannak if-ek, akkor a guard esetén használhatunk return helyett continue-t és így a következő elemhez ugrunk a loop-ban, de nem lépünk ki a teljes functionból.
+  	• Vagy kirakhatjuk külön functionba a guard-ot és használhatjuk a return-t.
+  	• Az egymásba ágyazott ifeket külön functionokra szedjük szét
+  	• Úgy is szétszedhetünk ifeket, hogy az egyik feltételnél egy tárolóba elmentjük stringként, hogy a másik feltétel függvényében melyik functiont kellene meghívni, és amikor ténylegesen vizsgáljuk a másik feltételt, akkor a megfelelő stringel hívjuk meg a function-t
+  	• A változó létezik-e vizsgálat helyett tudunk üres értéket is adni a paraméternek (pl. Ha csak kiírás akkor jó lehet vizsgálat nélkül.)
+  Hibakezelés:
+  	• Hibakezeléssel csökkenthető az ifek száma
+  	• A functionon belül dobjuk a hibát és a meghíváskor kezelhetjük try-catch-el
+  	• Több belső functionon keresztül is továbbítható a hiba kívülre
+  	• Ha egy functionon belül használunk try catch-t, akkor abban ne legyenek előtte a try-on kívül dolgok, tegyük külön function-ba
+  Factory functions & Polymorphism:
+  	• A factory function létrehoz egy objectet, tömböt. Bemenő paraméterekből
+  	• Polymorphism: Objektum orientált programozás egyik jellegzetessége a polimorfizmus, ami egyszerűsítve azt jelenti, hogy két azonos névvel rendelkező metódust a várt paraméterek típusa alapján különböztetjük meg és típustól függően a fordító (vagy interpereter) a megfelelő függvényt hívja meg. PHP gyenge típusossága miatt ezt nem tudjuk kihasználni. Elkerülő megoldás, ha interfaceket használunk. Ebben definiáljuk az azonos nevű methódust. Amelyik osztály implementálja az interfécünket, annak meg kell adnia ezt a methodot, hogy hogyan működjön.
+  	• Amikor objektum hierarchiákkal fogalkozunk, akkor gyakorta találkozunk azzal a jelenséggel, hogy ahelyett, hogy a speciális típusként hivatkoznánk egy-egy objektumra, inkább annak ős típusát használjuk, így adott ponton elképzelhető, hogy a különböző specializációkból más-mást használunk. Ez a megközelítés a többalakúság, polimorfizmus, amely biztosítja az objektumok felcserélhetőségét.
+  	https://phpenthusiast.com/object-oriented-php-tutorials/polymorphism-in-php
+  	http://nyelvek.inf.elte.hu/leirasok/PHP/index.php?chapter=10#section_5
+
+Osztályok, Szerkezet:
+  Objects/Data Structure:
+  	• Objects:
+  		○ Private változói lehetnek – ezeket preferáljuk
+  		○ Publikus  methodok, functionok amiket használhatunk
+  		○ Getters/setters
+  		○ Üzleti logikát hordoz
+  		○ Csinál valamit
+  		○ Pl. Database class
+  		○ Abstraction: high-level kód, nem tudjuk pontosan hogyan csinálja az adott kód amit csinál.  Adatbázis connect esetén például. A részletes kód el van rejve előlünk, nem is fontos
+  	• Data Container/Data Structure:
+  		○ Public változók, konstansok
+  		○ Nincsenek általában methodjai, functionjai
+  		○ Tárol és közvetíti az adatot
+  		○ Használhatjuk az adatait
+  		○ Pl UserCredentials class, ami csak beállít egy email - password párost
+  	• A kettőt ne keverjük, az objects-be ne csináljunk egy public dataContainert
+  Polymorphism:
+  	• Objektum orientált programozás egyik jellegzetessége a polimorfizmus, ami egyszerűsítve azt jelenti, hogy két azonos névvel rendelkező metódust a várt paraméterek típusa alapján különböztetjük meg és típustól függően a fordító (vagy interpereter) a megfelelő függvényt hívja meg. PHP gyenge típusossága miatt ezt nem tudjuk kihasználni. Elkerülő megoldás, ha interfaceket használunk. Ebben definiáljuk az azonos nevű methódust. Amelyik osztály implementálja az interfécünket, annak meg kell adnia ezt a methodot, hogy hogyan működjön.
+  	• Amikor objektum hierarchiákkal fogalkozunk, akkor gyakorta találkozunk azzal a jelenséggel, hogy ahelyett, hogy a speciális típusként hivatkoznánk egy-egy objektumra, inkább annak ős típusát használjuk, így adott ponton elképzelhető, hogy a különböző specializációkból más-mást használunk. Ez a megközelítés a többalakúság, polimorfizmus, amely biztosítja az objektumok felcserélhetőségét.
+  	https://phpenthusiast.com/object-oriented-php-tutorials/polymorphism-in-php
+  	http://nyelvek.inf.elte.hu/leirasok/PHP/index.php?chapter=10#section_5
+  	https://okt.sed.hu/prog1/gyakorlat/eloadas/Java/polymorphism/
+  	• Használhatjuk, ha egy osztályon belül sok az if-elseif-else, hogy külön classokba szervezzük ezeket, és egy interface-ben meghatározzuk a kötelező functionokat.
+  Classes:
+  	• Legyenek kis méretűek
+  	• Szedjük szét több kisebb classba a nagyon nagyokat
+  	• Cohesion: Az osztály egyes függvényei mennyi változóját használják az osztálynak. Kerülni kell a no cohesiont. A cél a highly coheison classes: minél több változót használjanak a függvények
+  		○ Maximum cohesion: az összes függvény használja az összes változót
+  		○ No cohesion: egyik függvény sem használja a változókat, ide tartoznak a data containerek is.
+  	• A kisebb osztályokra szétszedés is növelheti a cohesion-t, ha az eredetiben a függvények például csak egy-egy változót használtak
+  	• Law Of Demeter (Principle of Least Knowledge): Kerüljük az ilyet: this.valami.valami.date kivéve ha data containerekről van szó, de sima osztálynál ne legyen ilyen.
+  		○ Egy osztály ne álljon kapcsolatban idegen osztályokkal, csak amihez tényleg muszáj köze lennie:
+  		https://hu.wikipedia.org/wiki/Demeter_t%C3%B6rv%C3%A9nye
+
+SOLID
+	• SRP – Single-Responsibility Principle: Egy osztálynak egyetlen dologra kell vonatkoznia, ez nem azt jelenti, hogy egy functiont írunk bele. Például Product class: minden mehet bele aminek ehhez van köze: create new, update stb
+	• OCP – Open-Closed Principle: Egy osztályt felruházhatunk új tulajdonsággal, de csakis úgy, hogy nem piszkálunk bele a meglévő forráskódba, hanem kiterjesztjük azt. Az osztályaink legyenek nyitottak kiterjesztésre (új feature hozzáadása új subclassal), de zártak módosításra (magába az osztályba nem írjunk új feature miatt).
+		○ Segít, hogy az osztályok kicsik maradjanak
+		○ Segít a DRY betartásában (implement, extends)
+	• LSP – Liskov Substitution Principle: Van egy fő class egy függvénnyel amit példányosítunk, meghívunk. És van ennek egy al class-a, ha ezt példányosítjuk és meghívjuk a fő osztály függvényét, ugyanúgy kell működnie mindennek. És nem lehet olyan al class-a ami nem használhatja ezt a fő függvényt. Helyesen kell a szerkezetet meghatározni
+	• ISP – Interface Segregation Principle: Legyen több különálló interface, mint egy általános --> kevésbé használható, mert lehet lesz egy függvény amire nincs szüksége valamelyik osztályunknak
+	• DIP – Dependency Inversion Principle: Például: van egy osztályunk ami valamilyen fajta adatbázist vár (többféle lehet), ilyenkor nem ezek fajtáját adjuk át és vizsgáljuk, hanem magát az adatbázis interfacet, anut az adatbázis osztályok kiterjesztenek. És a meghívás helyén intézzük a specifikus adatbázis meghívását és a connectet
+
+
+
+
+
+
+
+
+
+
